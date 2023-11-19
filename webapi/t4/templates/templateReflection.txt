@@ -1,0 +1,58 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Reflection" #>
+
+<#@ assembly name="$(SolutionDir)webapi\bin\Debug\net7.0\webapi.dll" #>
+<#@ import namespace="webapi" #>
+<#@ import namespace="webapi.Models.Implementations" #>
+
+<#@ output extension=".txt" #>
+
+
+using webapi.Models.DTOs.Interfaces.Response;
+using webapi.Models.Implementations;
+
+
+<#
+Product p = new Product();
+p.ProductName = "a";
+
+string namespaceName = "webapi.Models.Implementations";
+foreach (string Value in Enum.GetNames(typeof(Models))) 
+{     
+    string className = Value;
+    Type classType = Type.GetType(namespaceName + "." + Value);
+#>
+        namespace webapi.Models.DTOs.Implementations.<#=Value#>DTOs.Response
+        {
+            /// <summary>
+            /// Represent a response (DTO) for <#=Value#>
+            /// </summary>
+            public class <#=Value#>Response : IResponse
+            {
+                public int? Id { get; set; }
+
+                public int <#= p.ProductName #> {get; set; }
+            }
+        }
+<#        
+}
+#>
+
+<#+
+enum Models
+{
+    Category,
+    Customer,
+    Discount,
+    Employee,
+    Product,
+    Sale,
+    Spending,
+    StoreBranch,
+    Supplier
+}
+#>
