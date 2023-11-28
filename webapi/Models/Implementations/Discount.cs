@@ -39,6 +39,60 @@ namespace webapi.Models.Implementations
         /// </summary>
         public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
 
+
+
+        /// <summary>
+        /// Checks are two instance are the same
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>bool, is thet are the same</returns>
+        public static bool operator==(Discount left, Discount right)
+        {
+            if(left.Id != right.Id) return false;
+            if(left.Name != right.Name) return false;
+            if(left.Description  != right.Description) return false;
+            if(left.StartDate != right.StartDate) return false;
+            if(left.EndDate != right.EndDate) return false;
+            if(left.ProductId != right.ProductId) return false;
+            //Products is not checked
+            //Customer is not checked
+            return true;
+        }
+        /// <summary>
+        /// Checks are two instance are not the same
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>bool, is they are not the same</returns>
+        public static bool operator!=(Discount left, Discount right)
+        {
+            if(left == right) return false;
+            return true;
+        }
+        /// <inheritdoc/>
+        public override bool Equals(object? obj)
+        {
+            var another = obj as Discount;
+            if (another is null)
+            {
+                return false;
+            }
+            if (this.Id != another.Id) return false;
+            if (this.Name != another.Name) return false;
+            if (this.Description != another.Description) return false;
+            if (this.StartDate != another.StartDate) return false;
+            if (this.EndDate != another.EndDate) return false;
+            if (this.ProductId != another.ProductId) return false;
+            //Products is not checked
+            //Customer is not checked
+            return true;
+        }
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -52,8 +106,7 @@ namespace webapi.Models.Implementations
                     res += propertyInfo.Name + ": ";
                     res += propertyInfo.GetValue(this, null) + "\n\t";
                 }
-            }
-            res += "\n\n\n";
+            }            
             return res;
         }
     }

@@ -57,6 +57,63 @@ namespace webapi.Models.Implementations
         /// </summary>
         public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 
+
+
+        /// <summary>
+        /// Checks are two instance are the same
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>bool, is they are the same</returns>
+        public static bool operator==(Sale left, Sale right)
+        {
+            if(left.Id != right.Id) return false;
+            if(left.SaleDate != right.SaleDate) return false;
+            if(left.TotalAmount != right.TotalAmount) return false;
+            if(left.PaymentMethod != right.PaymentMethod) return false;
+            if(left.EmployeeId != right.EmployeeId) return false;
+            if(left.CustomerId != right.CustomerId) return false;
+            //Employee
+            //Customer
+            //Products
+            return true;
+        }
+        /// <summary>
+        /// Checks are two instance are not the same
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>bool, is they are not the same</returns>
+        /// <inheritdoc/>
+        public static bool operator!=(Sale left, Sale right)
+        {
+            if (left == right) return false;
+            return true;
+        }
+        /// <inheritdoc/>
+        public override bool Equals(object? obj)
+        {
+            var another = obj as Sale;
+            if (another is null)
+            {
+                return false;
+            }
+            if (this.Id != another.Id) return false;
+            if (this.SaleDate != another.SaleDate) return false;
+            if (this.TotalAmount != another.TotalAmount) return false;
+            if (this.PaymentMethod != another.PaymentMethod) return false;
+            if (this.EmployeeId != another.EmployeeId) return false;
+            if (this.CustomerId != another.CustomerId) return false;
+            //Employee
+            //Customer
+            //Products
+            return true;
+        }
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -70,8 +127,7 @@ namespace webapi.Models.Implementations
                     res += propertyInfo.Name + ": ";
                     res += propertyInfo.GetValue(this, null) + "\n\t";
                 }
-            }
-            res += "\n\n\n";
+            }            
             return res;
         }
     }

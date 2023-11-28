@@ -30,16 +30,30 @@ namespace webapi.Models.Implementations
             {
                 if(value < 0)
                 {
-                    throw new InvalidOperationException();
+                    throw new InvalidDataException();
                 }
                 count = value;
             } 
-        }
+        }        
         private long count;
         /// <summary>
         /// Represent price of product
         /// </summary>
-        public decimal Price { get; set; }
+        public decimal Price { 
+            get
+            {
+                return price;
+            }
+            set
+            {
+                if( value < 0)
+                {
+                    throw new InvalidDataException();
+                }
+                price = value;
+            }
+        }
+        private decimal price;
         /// <summary>
         /// Represent category, product belogns to
         /// </summary>
@@ -77,6 +91,70 @@ namespace webapi.Models.Implementations
         /// </summary>
         public virtual ICollection<Sale> Sales { get; set; } = new List<Sale>();
 
+
+
+        /// <summary>
+        /// Checks are two instance are the same
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>bool, is they are the same</returns>
+        public static bool operator==(Product left, Product right)
+        {
+            if(left.Id  != right.Id) return false;
+            if(left.ProductName != right.ProductName) return false;
+            if(left.Description != right.Description) return false;
+            if(left.Count != right.Count) return false;
+            if(left.Price != right.Price) return false;
+            if(left.CategoryId != right.CategoryId) return false;
+            if(left.SpendingId != right.SpendingId) return false;
+            if(left.SupplierId != right.SupplierId) return false;
+            //Discounts
+            //Spending
+            //StoreBranches
+            //Supplier
+            //Sales
+            return true;
+        }
+        /// <summary>
+        /// Checks are two instance are not the same
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>bool, is they are not the same</returns>
+        public static bool operator !=(Product left, Product right)
+        {
+            if(left == right) return false;
+            return true;
+        }
+        /// <inheritdoc/>
+        public override bool Equals(object? obj)
+        {
+            var another = obj as Product;
+            if (another is null)
+            {
+                return false;
+            }
+            if (this.Id != another.Id) return false;
+            if (this.ProductName != another.ProductName) return false;
+            if (this.Description != another.Description) return false;
+            if (this.Count != another.Count) return false;
+            if (this.Price != another.Price) return false;
+            if (this.CategoryId != another.CategoryId) return false;
+            if (this.SpendingId != another.SpendingId) return false;
+            if (this.SupplierId != another.SupplierId) return false;
+            //Discounts
+            //Spending
+            //StoreBranches
+            //Supplier
+            //Sales
+            return true;
+        }
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
         /// <inheritdoc/>        
         public override string ToString()
         {
@@ -90,8 +168,7 @@ namespace webapi.Models.Implementations
                     res += propertyInfo.Name + ": ";
                     res += propertyInfo.GetValue(this, null) + "\n\t";
                 }
-            }
-            res += "\n\n\n";
+            }            
             return res;
         }
     }

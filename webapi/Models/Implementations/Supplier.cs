@@ -31,6 +31,56 @@ namespace webapi.Models.Implementations
         /// </summary>
         public virtual ICollection<Spending> Spendings { get; set; } = new List<Spending>();
 
+
+
+        /// <summary>
+        /// Checks are two instance are the same
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>bool, is they are the same</returns>
+        public static bool operator==(Supplier left, Supplier right)
+        {
+            if(left.Id != right.Id) return false;
+            if(left.SupplierName != right.SupplierName) return false;
+            if(left.ContactInfo != right.ContactInfo) return false;
+            if(left.Address != right.Address) return false;
+            //Products
+            //Spendings
+            return true;
+        }
+        /// <summary>
+        /// Checks are two instance are not the same
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>bool, is they are not the same</returns>
+        public static bool operator!=(Supplier left, Supplier right)
+        {
+            if (left == right) return false;
+            return true;
+        }
+        /// <inheritdoc/>
+        public override bool Equals(object? obj)
+        {
+            var another = obj as Supplier;
+            if (another is null)
+            {
+                return false;
+            }
+            if (this.Id != another.Id) return false;
+            if (this.SupplierName != another.SupplierName) return false;
+            if (this.ContactInfo != another.ContactInfo) return false;
+            if (this.Address != another.Address) return false;
+            //Products
+            //Spendings
+            return true;
+        }
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
         /// <inheritdoc/>
         public override string ToString()
         {

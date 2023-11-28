@@ -35,6 +35,58 @@ namespace webapi.Models.Implementations
         /// </summary>
         public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 
+
+
+        /// <summary>
+        /// Checks are two instance are the same
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>bool, is they are the same</returns>
+        public static bool operator==(StoreBranch left, StoreBranch right)
+        {
+            if(left.Id != right.Id) return false;
+            if(left.Name != right.Name) return false;
+            if(left.Location != right.Location) return false;
+            if(left.Info != right.Info) return false;
+            if(left.OpeningDate != right.OpeningDate) return false;
+            //Employees
+            //Products
+            return true;
+        }
+        /// <summary>
+        /// Checks are two instance are not the same
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>bool, is they are not the same</returns>
+        public static bool operator!=(StoreBranch left, StoreBranch right)
+        {
+            if(left == right) return false;
+            return true;
+        }
+        /// <inheritdoc/>
+        public override bool Equals(object? obj)
+        {
+            var another = obj as StoreBranch;
+            if (another is null)
+            {
+                return false;
+            }
+            if (this.Id != another.Id) return false;
+            if (this.Name != another.Name) return false;
+            if (this.Location != another.Location) return false;
+            if (this.Info != another.Info) return false;
+            if (this.OpeningDate != another.OpeningDate) return false;
+            //Employees
+            //Products
+            return true;
+        }
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -48,8 +100,7 @@ namespace webapi.Models.Implementations
                     res += propertyInfo.Name + ": ";
                     res += propertyInfo.GetValue(this, null) + "\n\t";
                 }
-            }
-            res += "\n\n\n";
+            }            
             return res;
         }
     }

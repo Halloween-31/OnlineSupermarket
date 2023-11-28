@@ -51,6 +51,66 @@ namespace webapi.Models.Implementations
         /// </summary>
         public virtual StoreBranch? Store { get; set; }
 
+
+
+        /// <summary>
+        /// Checks are two instance are the same
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>bool, is they are the same</returns>
+        public static bool operator==(Employee left, Employee right)
+        {
+            if(left.Id != right.Id) return false;
+            if(left.FirstName != right.FirstName) return false;
+            if(left.LastName != right.LastName) return false;
+            if(left.DateOfBirth != right.DateOfBirth) return false;
+            if(left.Phone != right.Phone) return false;
+            if(left.Position != right.Position) return false;
+            if(left.Salary != right.Salary) return false;
+            if(left.StoreId != right.StoreId) return false;
+            //Sales is not checked
+            //Spendings is not checked
+            //Store is not checked
+            return true;
+        }
+        /// <summary>
+        /// Checks are two instance are not the same
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns>bool, is they are not the same</returns>
+        public static bool operator !=(Employee left, Employee right)
+        {
+            if(left == right) return false;
+            return true;
+        }
+        /// <inheritdoc/>
+        public override bool Equals(object? obj)
+        {
+            var another = obj as Employee;
+            if (another is null)
+            {
+                return false;
+            }
+            if (this.Id != another.Id) return false;
+            if (this.FirstName != another.FirstName) return false;
+            if (this.LastName != another.LastName) return false;
+            if (this.DateOfBirth != another.DateOfBirth) return false;
+            if (this.Phone != another.Phone) return false;
+            if (this.Position != another.Position) return false;
+            if (this.Salary != another.Salary) return false;
+            if (this.StoreId != another.StoreId) return false;
+            //Sales is not checked
+            //Spendings is not checked
+            //Store is not checked
+            return true;
+        }
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -65,7 +125,6 @@ namespace webapi.Models.Implementations
                     res += propertyInfo.GetValue(this, null) + "\n\t";
                 }
             }
-            res += "\n\n\n";
             return res;
         }
     }
