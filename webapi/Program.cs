@@ -1,6 +1,7 @@
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using webapi.Data;
+using webapi.Tools.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,7 @@ builder.Services.AddSwaggerGen(opt =>
 });
 
 builder.Services.AddDbContext<OnlineSupermarket_DbContext>();
+builder.Services.AddRepositories();
 
 var app = builder.Build();
 
